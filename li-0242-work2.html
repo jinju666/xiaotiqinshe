@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎻 小提琴社｜让琴声成为我们的语言</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: "Microsoft Yahei", "PingFang SC", system-ui, -apple-system;
+        background: linear-gradient(180deg, #f7efe2 0%, #fbe4d6 25%, #fde8ec 50%, #eaf2fb 100%);
+        color: #3b3330;
+        line-height: 1.8;
+        padding-bottom: 80px;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    /* 顶部音乐按钮 */
+    #top {
+        padding: 18px 0 10px;
+    }
+
+    .audio-btn {
+        background: linear-gradient(90deg, #d9a76b, #c4754a);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(196, 117, 74, 0.25);
+        transition: 0.3s ease;
+    }
+
+    .audio-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(196, 117, 74, 0.35);
+    }
+
+    /* 顶部横幅区 */
+    .hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        padding: 56px 40px 48px;
+        margin-top: 14px;
+        background:
+            radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0) 28%),
+            radial-gradient(circle at 88% 10%, rgba(255, 221, 180, 0.55) 0, rgba(255, 180, 140, 0) 34%),
+            linear-gradient(135deg, #fffaf0 0%, #ffe9d2 45%, #ffd7c2 100%);
+        box-shadow: 0 20px 45px rgba(180, 120, 70, 0.18);
+    }
+
+    .hero-en {
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: #b58550;
+        margin-bottom: 16px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+        line-height: 1.2;
+        color: #4a3222;
+        margin-bottom: 18px;
+        letter-spacing: 1px;
+    }
+
+    .hero h1 span {
+        background: linear-gradient(90deg, #c4754a, #a54f2a);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .hero p {
+        font-size: 17px;
+        color: #6b5a4f;
+        max-width: 640px;
+        margin-bottom: 28px;
+    }
+
+    .join-btn {
+        display: inline-block;
+        background: linear-gradient(90deg, #c4754a, #d9a76b);
+        color: #fff;
+        padding: 14px 34px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-size: 17px;
+        letter-spacing: 2px;
+        box-shadow: 0 10px 24px rgba(196, 117, 74, 0.35);
+        transition: 0.3s ease;
+    }
+
+    .join-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 30px rgba(196, 117, 74, 0.45);
+    }
+
+    /* 装饰圆 */
+    .hero-circle {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.45;
+        z-index: 0;
+    }
+
+    .hero-circle.c1 {
+        width: 260px;
+        height: 260px;
+        background: #ffd5a8;
+        right: -60px;
+        top: -80px;
+    }
+
+    .hero-circle.c2 {
+        width: 180px;
+        height: 180px;
+        background: #ffb39a;
+        left: 30%;
+        bottom: -60px;
+    }
+
+    /* 导航 */
+    .nav-box {
+        margin-top: 30px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 999px;
+        box-shadow: 0 8px 24px rgba(180, 120, 70, 0.12);
+        padding: 14px 20px;
+        text-align: center;
+    }
+
+    .nav-box a {
+        margin: 0 12px;
+        font-size: 16px;
+        color: #7a5a3a;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 24px;
+        transition: 0.3s ease;
+    }
+
+    .nav-box a:hover {
+        background: rgba(255, 255, 255, 0.9);
+        color: #c4754a;
+    }
+
+    /* 通用卡片 */
+    section {
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        box-shadow: 0 14px 34px rgba(180, 120, 70, 0.12);
+        padding: 36px;
+        margin-top: 30px;
+        transition: 0.4s ease;
+    }
+
+    section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 22px 46px rgba(180, 120, 70, 0.18);
+    }
+
+    section h2 {
+        font-size: 26px;
+        color: #4a3222;
+        margin-bottom: 18px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    section h2::after {
+        content: "";
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #d9a76b, #c4754a);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border-radius: 2px;
+    }
+
+    section p {
+        color: #5c4a40;
+        margin-bottom: 14px;
+    }
+
+    /* 返回顶部文字 */
+    .backtop-text {
+        display: inline-block;
+        margin-top: 18px;
+        color: #a54f2a;
+        text-decoration: none;
+    }
+
+    .backtop-text:hover {
+        text-decoration: underline;
+    }
+
+    /* 右下角悬浮返回顶部 */
+    .float-backtop {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 52px;
+        height: 52px;
+        background: linear-gradient(135deg, #d9a76b, #c4754a);
+        color: #fff;
+        text-align: center;
+        line-height: 52px;
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 22px;
+        box-shadow: 0 10px 24px rgba(196, 117, 74, 0.4);
+        transition: 0.3s ease;
+        z-index: 99;
+    }
+
+    .float-backtop:hover {
+        transform: translateY(-4px);
+    }
+
+    /* 表格 */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0 24px;
+    }
+
+    th, td {
+        border: 1px solid #ecd9c6;
+        padding: 13px;
+        text-align: center;
+    }
+
+    th {
+        background: rgba(217, 167, 107, 0.18);
+        color: #6b4422;
+    }
+
+    tr:nth-child(even) td {
+        background: rgba(255, 250, 240, 0.6);
+    }
+
+    /* 图片和视频 */
+    .show-link {
+        display: inline-block;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    img {
+        width: 100%;
+        max-width: 680px;
+        border-radius: 20px;
+        box-shadow: 0 16px 34px rgba(180, 120, 70, 0.2);
+        transition: transform 0.4s ease;
+    }
+
+    img:hover {
+        transform: scale(1.03);
+    }
+
+    embed {
+        width: 100%;
+        max-width: 680px;
+        height: 380px;
+        border-radius: 20px;
+        box-shadow: 0 16px 34px rgba(180, 120, 70, 0.2);
+        margin-top: 10px;
+    }
+
+    /* 表单 */
+    form table {
+        border: none;
+    }
+
+    form table td {
+        border: none;
+        padding: 10px 8px;
+        text-align: left;
+        color: #5c4a40;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid #e2d0bc;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.75);
+        font-size: 15px;
+        outline: none;
+        transition: 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #c4754a;
+        box-shadow: 0 0 0 4px rgba(196, 117, 74, 0.18);
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 30px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        margin-right: 14px;
+    }
+
+    input[type="submit"] {
+        background: linear-gradient(90deg, #c4754a, #d9a76b);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(196, 117, 74, 0.3);
+    }
+
+    input[type="submit"]:hover {
+        transform: translateY(-2px);
+    }
+
+    input[type="reset"] {
+        background: #f1e3d2;
+        color: #6b4422;
+    }
+
+    /* 小屏适配 */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 30px;
+        }
+
+        section {
+            padding: 26px;
+        }
+
+        embed {
+            height: 220px;
+        }
+
+        .nav-box a {
+            margin: 0 6px;
+            font-size: 14px;
+            padding: 6px 10px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="top">
+        <audio id="bgm" src="violin.mp3"></audio>
+        <button class="audio-btn" onclick="document.getElementById('bgm').play()">
+            🎵 点击播放小提琴社主题曲
+        </button>
+    </div>
+
+    <!-- 顶部横幅 -->
+    <div class="hero">
+        <span class="hero-circle c1"></span>
+        <span class="hero-circle c2"></span>
+
+        <div class="hero-en">
+            SHANDONG NORMAL UNIVERSITY · VIOLIN CLUB
+        </div>
+
+        <h1>
+            让琴声，<br>
+            <span>成为我们的语言。</span>
+        </h1>
+
+        <p>
+            从第一次拿起小提琴，到和伙伴一起站上舞台。这里有热爱音乐的人，也有属于你的节拍。
+            无论你是零基础新手，还是有演奏基础的同学，都可以在这里找到一起练琴、一起分享音乐的朋友。
+        </p>
+
+        <a href="#form" class="join-btn">加入我们</a>
+    </div>
+
+    <!-- 导航 -->
+    <nav class="nav-box">
+        <a href="#intro">社团简介</a>
+        <a href="#active">活动安排</a>
+        <a href="#show">风采展示</a>
+        <a href="#story">社员故事</a>
+        <a href="#form">在线报名</a>
+    </nav>
+
+    <!-- 社团简介 -->
+    <section id="intro">
+        <h2>社团简介</h2>
+
+        <p>
+            小提琴社团是本校充满浪漫艺术气息的器乐兴趣社团，面向全校所有专业同学敞开大门。无论你曾经是否接触过弦乐器，只要你沉醉于小提琴悠扬婉转的音色，心中怀揣一份对音乐的向往，都欢迎来到这里。社团汇聚了拥有多年演奏功底的爱好者，也接纳每一位从零起步的新手。
+        </p>
+
+        <p>
+            每学期我们开设系列小提琴公开课，从持琴、运弓、基础识谱一点点带大家入门。在这里既可以练习古典名曲，也可以演绎流行改编曲目；室内乐合奏排练、小型汇报音乐会、校园文艺演出，各式各样的舞台等待你。我们经常举办音乐赏析茶会，围坐在一起聆听经典、交流练琴感悟。社团不会用演奏水平设置门槛，更看重大家发自内心的热爱。学长学姐会分享乐器选购、保养小知识，琴房结伴练习，互相纠正演奏问题。在课业忙碌的大学生活里，弓弦流淌出的旋律，会成为一份温柔的精神慰藉。期待与你一起，让琴声陪伴我们的青春时光。
+        </p>
+
+        <a href="#top" class="backtop-text">🔝 返回顶部</a>
+    </section>
+
+    <!-- 活动安排 -->
+    <section id="active">
+        <h2>活动安排</h2>
+
+        <table>
+            <tr>
+                <th colspan="4">小提琴社 2026 年春季学期活动安排表</th>
+            </tr>
+            <tr>
+                <th>活动名称</th>
+                <th>时间</th>
+                <th>地点</th>
+                <th>参与对象</th>
+            </tr>
+            <tr>
+                <td>新成员见面会</td>
+                <td>3月8日 18:00</td>
+                <td>艺术楼203教室</td>
+                <td>全体新社员</td>
+            </tr>
+            <tr>
+                <td>小提琴基础教学公开课</td>
+                <td>3月15日 19:00</td>
+                <td>艺术楼203教室</td>
+                <td>零基础同学优先</td>
+            </tr>
+            <tr>
+                <td>室内乐小组排练</td>
+                <td>每周四晚19点</td>
+                <td>艺术楼205琴房</td>
+                <td>有基础社员</td>
+            </tr>
+            <tr>
+                <td>春季小型音乐会汇演</td>
+                <td>5月20日 14:00</td>
+                <td>学校大礼堂</td>
+                <td>全体社员，全校观众</td>
+            </tr>
+        </table>
+
+        <p>
+            除计划表内固定项目之外，社团不定期开展音乐赏析、草坪音乐沙龙。很多零基础同学在这里，从不会拿琴到完整演奏曲目，勇敢站上舞台。音乐专业的学长学姐会过来开展技术分享，帮大家解决练琴遇到的卡点。练琴的旅途不再孤单，有一群同好陪你慢慢进步。
+        </p>
+
+        <a href="#top" class="backtop-text">🔝 返回顶部</a>
+    </section>
+
+    <!-- 风采展示 -->
+    <section id="show">
+        <h2>风采展示</h2>
+
+        <a class="show-link" href="club_intro.html">
+            <img src="violin.jpg" alt="小提琴社团日常演奏">
+        </a>
+
+        <p style="margin-top:14px; color:#7a5a3a;">
+            👆 点击图片跳转查看社团活动详情页面
+        </p>
+
+        <h3 style="margin:24px 0 12px; color:#4a3222;">社团活动短视频</h3>
+
+        <embed src="violin.mp4">
+
+        <br>
+        <a href="#top" class="backtop-text">🔝 返回顶部</a>
+    </section>
+
+    <!-- 社员故事 -->
+    <section id="story">
+        <h2>社员故事</h2>
+
+        <p>
+            进入大学之前，我从来没有触碰过乐器，只是无数次被小提琴悠扬的旋律打动，但总觉得弦乐门槛很高，不敢迈出第一步。招新的时候路过小提琴社摊位，抱着试一试的心态递交报名，就此开启了我的音乐旅程。刚入社时，我连拿琴握弓都十分笨拙，拉出的音色干涩刺耳，好几次练习到手指酸痛，萌生放弃的念头。
+        </p>
+
+        <p>
+            社团的学长学姐格外温柔耐心，公开课上细致示范，课后牺牲自己课余时间帮我调整姿势、讲解乐谱。从枯燥的空弦练习，到慢慢攻克音阶，两个多月之后，我终于拉出完整简单的小曲。琴房里大家挤在一起练琴，互相打气，遇到难点一起探讨。期末小型音乐会，不少零基础社员鼓起勇气登台，就算演奏尚有瑕疵，台下依旧响起热烈掌声。在这里，技巧高低从来不是衡量你的标尺，热爱才是入场券。学习小提琴免不了枯燥煎熬，但当悦耳旋律从琴弦间缓缓涌出，所有辛苦都变得有意义。如果你心底藏着一份对音乐的憧憬，欢迎来到小提琴社，每一份热爱都值得被听见。
+        </p>
+
+        <a href="#top" class="backtop-text">🔝 返回顶部</a>
+    </section>
+
+    <!-- 在线报名 -->
+    <section id="form">
+        <h2>在线报名表</h2>
+
+        <form action="#">
+            <table>
+                <tr>
+                    <td style="width:140px;">姓名：</td>
+                    <td><input type="text" name="username"></td>
+                </tr>
+                <tr>
+                    <td>性别：</td>
+                    <td>
+                        <input type="radio" name="gender" value="male"> 男
+                        <input type="radio" name="gender" value="female"> 女
+                    </td>
+                </tr>
+                <tr>
+                    <td>出生日期：</td>
+                    <td>
+                        年：<input type="text" name="year" size="6">
+                        月：<input type="text" name="month" size="4">
+                        日：<input type="text" name="day" size="4">
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号码：</td>
+                    <td><input type="text" name="phone"></td>
+                </tr>
+                <tr>
+                    <td>邮箱：</td>
+                    <td><input type="text" name="email"></td>
+                </tr>
+                <tr>
+                    <td>是否有小提琴基础：</td>
+                    <td>
+                        <input type="radio" name="base" value="yes"> 有
+                        <input type="radio" name="base" value="no"> 无
+                    </td>
+                </tr>
+                <tr>
+                    <td>兴趣方向：</td>
+                    <td>
+                        <input type="checkbox" name="hobby" value="classic"> 古典小提琴
+                        <input type="checkbox" name="hobby" value="pop"> 流行改编曲目
+                        <input type="checkbox" name="hobby" value="chamber"> 室内乐合奏
+                        <input type="checkbox" name="hobby" value="performance"> 舞台演出
+                    </td>
+                </tr>
+                <tr>
+                    <td>年级：</td>
+                    <td>
+                        <select name="grade">
+                            <option>大一</option>
+                            <option>大二</option>
+                            <option>大三</option>
+                            <option>大四</option>
+                            <option>研究生</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>自我介绍：</td>
+                    <td>
+                        <textarea name="intro" rows="6" placeholder="请简单介绍自己，以及加入小提琴社的理由……"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>是否服从社团活动安排：</td>
+                    <td>
+                        <input type="radio" name="arrange" value="yes"> 是
+                        <input type="radio" name="arrange" value="no"> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="提交报名">
+                        <input type="reset" value="重置表单">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <a href="#top" class="backtop-text">🔝 返回顶部</a>
+    </section>
+
+</div>
+
+<!-- 右下角悬浮返回顶部 -->
+<a href="#top" class="float-backtop" title="返回顶部">↑</a>
+
+</body>
+</html>
